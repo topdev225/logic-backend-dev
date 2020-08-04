@@ -1,0 +1,34 @@
+{
+  "name": "proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "supervisor node --inspect server.js"
+  },
+  "author": "ABIS",
+  "license": "ISC",
+  "dependencies": {
+    "@okta/jwt-verifier": "^1.0.0",
+    "@okta/okta-sdk-nodejs": "^3.2.0",
+    "axios": "^0.19.2",
+    "base-64": "^0.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fetch-base64": "^2.1.2",
+    "http-proxy": "^1.18.0",
+    "install": "^0.13.0",
+    "lodash": "^4.17.15",
+    "lodash.filter": "^4.6.0",
+    "moment": "2.18.1",
+    "mongodb": "^3.5.2",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.0",
+    "npm": "^6.13.7",
+    "redbird": "^0.10.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "supervisor": "^0.12.0"
+  }
+}

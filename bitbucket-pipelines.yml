@@ -1,0 +1,140 @@
+# This is a sample build configuration for Python.
+# Check our guides at https://confluence.atlassian.com/x/x4UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: atlassian/default-image:2
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Git Pull
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'cd ~/git/logic-backend-dev/ && git reset --hard master'
+      - step:
+          name: Deploy to Server
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'rsync -avp ~/git/logic-backend-dev/* webapp:/usr/share/logic/public'
+      - step:
+          name: NPM Install
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo npm install --prefix /usr/share/logic/public"'
+      - step:
+          name: Restart Webapp
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo systemctl restart webapp.service"'
+    casey-branch:
+      - step:
+          name: Git Pull
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'cd ~/git/logic-backend-dev/ && git reset --hard origin/casey-branch'
+      - step:
+          name: Deploy to Server
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'rsync -avp ~/git/logic-backend-dev/* webapp:/usr/share/logic-dev/public'
+      - step:
+          name: NPM Install
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo npm install --prefix /usr/share/logic-dev/public"'
+      - step:
+          name: Restart Webapp
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo systemctl restart webapp-dev.service"'
+    matt-branch:
+      - step:
+          name: Git Pull
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'cd ~/git/logic-backend-dev/ && git reset --hard origin/matt-branch'
+      - step:
+          name: Deploy to Server
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'rsync -avp ~/git/logic-backend-dev/* webapp:/usr/share/logic-dev/public'
+      - step:
+          name: NPM Install
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo npm install --prefix /usr/share/logic-dev/public"'
+      - step:
+          name: Restart Webapp
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo systemctl restart webapp-dev.service"'
+    staging:
+      - step:
+          name: Git Pull
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'cd ~/git/logic-backend-dev/ && git reset --hard origin/staging'
+      - step:
+          name: Deploy to Server
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'rsync -avp ~/git/logic-backend-dev/* webapp:/usr/share/logic-dev/public'
+      - step:
+          name: NPM Install
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo npm install --prefix /usr/share/logic-dev/public"'
+      - step:
+          name: Restart Webapp
+          script:
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'logic'
+                SERVER: '3.19.151.204'
+                COMMAND: 'ssh -t webapp "sudo systemctl restart webapp-dev.service"'
